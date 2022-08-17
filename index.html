@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Placeholder API challenge</title>
+    </head>
+    <body>
+        <main class="main-ctr">
+            <div id="loader">
+                <div>
+                    <h1 id="loader-info">Submitting...</h1>
+                </div>
+            </div>
+            <section class="main-card">
+                <form action="">
+                    <h1 class="heading">Feedback Form</h1>
+                    <div class="inputs">
+                        <input id = "first-name" type="text" placeholder="First Name" />
+                        <input id = "last-name" type="text" placeholder="Last Name" />
+                    </div>
+                    <div class="textarea-ctr">
+                        <textarea
+                            name="comments"
+                            id="comments"
+                            cols="22"
+                            rows="3"
+                            placeholder="Comments"
+                        ></textarea>
+                    </div>
+                    <div class="subscribe">
+                        <label for="subscribe-check"
+                            >Subscribe to newsletter</label
+                        >
+                        <input
+                            id="subscribe-check"
+                            type="checkbox"
+                            name="email-checkbox"
+                        />
+                    </div>
+                    <div id = "email-ctr" class="email">
+                        <input id = "email" type="email" placeholder="Enter your email" />
+                    </div>
+                    <div class="submit">
+                        <button id = "submit-btn" type="submit" disabled>Submit</button>
+                    </div>
+                </form>
+            </section>
+        </main>
+
+    </body>
+</html>

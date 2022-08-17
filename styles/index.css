@@ -1,0 +1,152 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-size: 62.5%;
+}
+
+body {
+    background-color: #fafafa;
+    font-family: "Segoe UI", sans-serif;
+}
+
+h1 {
+    font-size: 2.4rem;
+}
+
+label {
+    font-size: 1.4rem;
+}
+
+.main-ctr {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#loader{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 20%);
+    backdrop-filter: blur(2px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    visibility: hidden;
+}
+
+#loader > div{
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    padding: 3rem;
+
+}
+
+#loader h1{
+    color: #404040;
+}
+
+.main-card {
+    padding: 3rem;
+    background-color: white;
+    border: 1px solid #cecece;
+    border-radius: 8px;
+    box-shadow: 0 6px 3px -6px #cecece;
+}
+
+.heading {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 3.2rem;
+    color: #009aee;
+}
+
+.inputs {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 1.6rem;
+    margin-bottom: 1.6rem;
+}
+
+input {
+    flex: 1;
+}
+
+input,
+textarea {
+    border: 1px solid #cecece;
+    border-radius: 4px;
+    padding: 8px;
+    font-family: "Segoe UI", sans-serif;
+}
+
+input:focus,
+textarea:focus {
+    outline: none;
+    box-shadow: 0 0 8px #92dff3;
+}
+
+input[type="checkbox"]:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+input[type="checkbox"]:hover {
+    outline: none;
+    box-shadow: 0 0 8px #92dff3;
+}
+
+.textarea-ctr {
+    margin-bottom: 1.6rem;
+}
+
+.subscribe {
+    display: flex;
+    gap: 8px;
+    width: 50%;
+    margin-bottom: 1.2rem;
+}
+
+.email > input {
+    width: 100%;
+}
+
+.email {
+    margin-bottom: 1.6rem;
+    display: none;
+}
+
+button {
+    outline: none;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 16px;
+    color: white;
+    font-weight: 600;
+    background-color: #009aee;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+button:disabled{
+    background-color: #A3E3FA;
+    pointer-events: none;
+}
+
+button:hover {
+    background-color: #00adf2;
+    box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;
+}
+
+button:active {
+    background-color: #009aee;
+}
+
