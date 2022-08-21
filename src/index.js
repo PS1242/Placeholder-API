@@ -70,7 +70,7 @@ $(function () {
 
         $.ajax({
             type: 'POST',
-            url: 'https://jsonplaceholder.typicdode.com/users',
+            url: 'https://jsonplaceholder.typicode.com/users',
             data: JSON.stringify(payload),
             dataType: 'json',
             contentType: 'application/json',
