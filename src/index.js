@@ -1,120 +1,102 @@
 import '../styles/index.css'
-
-/**
- * Get all the DOM elements here
- */
-const fnInput = document.getElementById('first-name');
-const lnInput = document.getElementById('last-name');
-const subscribeCheck = document.getElementById('subscribe-check');
-const email = document.getElementById('email');
-const emailInput = document.getElementById('email-ctr')
-const submitBtn = document.getElementById('submit-btn');
-const comments = document.getElementById('comments');
-const loader = document.getElementById('loader');
-const loaderInfo = document.getElementById('loader-info');
+import $ from 'jquery';
 
 /**
  * Initialize all the states here
  */
 let isChecked = false;
 
-/**
- * Function to check whether form can be submitted or not.
- * Submit button will be enabled only when both inputs have non-empty values.
- */
-const checkIfCanSubmit = ()=>{
+$(function () {
 
-    if(fnInput.value !== '' && lnInput.value != ''){
-        submitBtn.disabled = false;
-    }
-    else{
-        submitBtn.disabled = true;
-    }
-}
+    $('#subscribe-check').on('change', toggleEmailInput);
+    $('#first-name').on('input', checkIfCanSubmit);
+    $('#last-name').on('input', checkIfCanSubmit);
+    $('#submit-btn').on('click', submitForm);
 
-const submitForm  = (e)=>{
+    function toggleEmailInput(e) {
 
-    //prevent page from reloading
-    e.preventDefault();
-
-    const firstName = fnInput.value;
-    const lastName = lnInput.value;
-    const comment = comments.value;
-
-    const payload = {
-        firstName,
-        lastName,
-        comment,
-        isSubscribed: isChecked,
-    };
-
-    //include email in the payload if the subscribe checkbox is ticked.
-    if(isChecked){
-        payload.email = email.value;
+        isChecked = e.target.checked;
+        if (isChecked)
+            $('#email-ctr').css('display', 'block')
+        else
+            $('#email-ctr').css('display', 'none')
     }
 
-    //Display loader until API is finished.
-    loader.style.visibility = 'visible';
+    /**
+     * Function to check whether form can be submitted or not.
+     * Submit button will be enabled only when both inputs have non-empty values.
+     */
+    function checkIfCanSubmit() {
 
-    //perform POST request
-    fetch('https://jsonplaceholder.typicode.com/users' , {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(payload),
-    })
-    .then(()=>{
-        //reset form values
-        fnInput.value = '';
-        lnInput.value = '';
-        comments.value = '';
-        submitBtn.disabled = true;
-        subscribeCheck.checked = false;
-        email.value = '';
-        emailInput.style.display = 'none';
-
-        //update loader text
-        loaderInfo.textContent = 'Submitted';
-
-        //Hide loader
-        setTimeout(() => {
-            loader.style.visibility = 'hidden';
-            loaderInfo.textContent = 'Submitting...'
-        }, 1000);
-    });
-}
-
-/**
- * Subscribe checkbox event listener - the email
- * input will appear only when the checkbox is checked.
- */
-subscribeCheck.addEventListener('change' , (e)=>{
-
-    const val = e.target.checked;
-    isChecked = val;
-
-    if(isChecked){
-        emailInput.style.display = 'block';
-    }
-    else{
-        emailInput.style.display = 'none';
+        if ($('#first-name').val() !== '' && $('#last-name').val() !== '')
+            $('#submit-btn').prop('disabled', false);
+        else
+            $('#submit-btn').prop('disabled', true);
     }
 
+    function resetForm() {
+
+        $('#first-name').val('');
+        $('#last-name').val('');
+        $('#comments').val('');
+        $('#email').val('');
+        $('#submit-btn').prop('disabled', true);
+        $('#subscribe-check').prop('checked', false);
+        $('#email-ctr').css('display', 'none');
+    }
+
+
+    function submitForm(e) {
+
+        e.preventDefault();
+
+        const firstName = $('#first-name').val();
+        const lastName = $('#last-name').val();
+        const comment = $('#comments').val();
+
+        const payload = {
+            firstName,
+            lastName,
+            comment,
+            isSubscribed: isChecked,
+        };
+
+        if (isChecked) {
+            payload.email = $('#email').val();
+        }
+
+        //display loader while API awaits response
+        $('#loader').css('visibility', 'visible');
+
+        $.ajax({
+            type: 'POST',
+            url: 'https://jsonplaceholder.typicdode.com/users',
+            data: JSON.stringify(payload),
+            dataType: 'json',
+            contentType: 'application/json',
+
+        }).always((data) => {
+
+            resetForm();
+        }).done((data) => {
+
+            console.log(data);
+            $('#loader-info').text('Submitted');
+            setTimeout(() => {
+                $('#loader').css('visibility', 'hidden');
+                $('#loader-info').text('Submitting...');
+            }, 1000);
+        }).fail((xhr, textStatus) => {
+
+            $('#loader-info').text(`${textStatus}!`);
+            $('#loader-info').css('color', 'red');
+            setTimeout(() => {
+                $('#loader').css('visibility', 'hidden');
+                $('#loader-info').text('Submitting...');
+            }, 2000);
+            throw new Error(textStatus)
+        })
+    }
 });
 
-/**
- * First name event listener
- */
-fnInput.addEventListener('input' , checkIfCanSubmit);
-
-/**
- * Last name event listener
- */
-lnInput.addEventListener('input', checkIfCanSubmit);
-
-/**
- * Submit button event listener
- */
-submitBtn.addEventListener('click' , submitForm);
 
